@@ -14,9 +14,9 @@ class Carrito:
         if id not in self.carrito.keys():
             self.carrito[id] = {
                 "vianda_id" : vianda.id,
-                "descripcion" : vianda.descripcion,
-                "tamaño" : vianda.tamaño,
                 "dia" : vianda.dia,
+                "tipo" : vianda.tipo,
+                "tamaño" : vianda.tamaño,
                 "acumulado" : vianda.precio,
                 "cantidad": 1,
             }

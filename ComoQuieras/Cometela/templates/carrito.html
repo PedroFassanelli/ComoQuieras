@@ -2,11 +2,11 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th scope="row" colspan="3" class="text-center">CARRITO</th>
+                <th scope="row" colspan="5" class="text-center">CARRITO</th>
             </tr>
             <tr>
                 <th scope="col">DIA</th>
-                <th scope="col">DESCRIPCION</th>
+                <th scope="col">TIPO</th>
                 <th scope="col">TAMAÑO</th>
                 <th scope="col">CANTIDAD</th>
                 <th scope="col">PRECIO</th>
@@ -17,25 +17,27 @@
         {% for key, value in request.session.carrito.items %}
             <tr>
                 <td>{{value.dia}}</td>
-                <td>{{value.descripcion}}</td>
+                <td>{{value.tipo}}</td>
                 <td>{{value.tamaño}}</td>
                 <td>{{value.cantidad}}</td>
                 <td>{{value.acumulado}}
-                    <a href="{% url 'Add' value.vianda_id %}" class="badge btn btn-dark badge-dark">+</a>
-                    <a href="{% url 'Sub' value.vianda_id %}" class="badge btn btn-dark badge-dark">-</a>
+                    <div>
+                        <a href="{% url 'Add' value.vianda_id %}" class="badge btn btn-dark badge-dark">+</a>
+                        <a href="{% url 'Sub' value.vianda_id %}" class="badge btn btn-dark badge-dark">-</a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         {% else %}
             <tr>
-                <td colspan="3">
+                <td colspan="5">
                     <div class="alert alert-danger text-center">Sin Viandas</div>
                 </td>
             </tr>
         {% endif %}
             <tr>
                 <th scope="row">Total:</th>
-                <td colspan="2">$ {{total_carrito}}</td>
+                <td colspan="4">$ {{total_carrito}}</td>
             </tr>
         </tbody>
     </table>

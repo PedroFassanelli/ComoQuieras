@@ -15,14 +15,14 @@
             <div class="col-12 align-self-center"><h1>Viandas Wiltel</h1></div>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-6">
                 <div class="row" style="padding: 10px 0;">
                     <div class="col-12">
                         <div class="row">
                             {% for vianda in viandas %}
                             {% if vianda.estado == 'ACTIVA' %}
                             <div class="col-6">
-                                <div class="card" >
+                                <div class="card mt-1" >
                                     <div class="card-body">
                                         <h5 class="card-title">{{vianda.dia}} - {{vianda.tipo}}</h5>
                                         <p class="card-text">{{vianda.descripcion}}</p>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-6">
                 {% include "carrito.html" %}
             </div>
         </div>
