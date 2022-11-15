@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from Cometela.views import tienda, agregar_vianda, eliminar_vianda, restar_vianda, limpiar_carrito
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', tienda, name = "Tienda"),
+    path('agregar/<int:vianda_id>/', agregar_vianda, name="Add"),
+    path('eliminar/<int:vianda_id>/', eliminar_vianda, name="Del"),
+    path('restar/<int:vianda_id>/', restar_vianda, name="Sub"),
+    path('limpiar/', limpiar_carrito, name="CLS"),
 ]

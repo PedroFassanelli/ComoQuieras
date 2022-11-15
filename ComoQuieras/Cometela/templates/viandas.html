@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viandas Wiltel</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 align-self-center"><h1>Viandas Wiltel</h1></div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="row" style="padding: 10px 0;">
+                    <div class="col-12">
+                        <div class="row">
+                            {% for vianda in viandas %}
+                            {% if vianda.estado == 'ACTIVA' %}
+                            <div class="col-6">
+                                <div class="card" >
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{vianda.dia}} - {{vianda.tipo}}</h5>
+                                        <p class="card-text">{{vianda.descripcion}}</p>
+                                        <p class="card-text">Tamaño: {{vianda.tamaño}}</p>
+                                        <p class="card-text">Precio: ${{vianda.precio}}</p>
+                                        <a href="{% url 'Add' vianda.id %}" class="btn btn-primary">Agregar al carrito</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                {% include "carrito.html" %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
