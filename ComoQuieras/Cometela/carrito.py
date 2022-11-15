@@ -15,6 +15,8 @@ class Carrito:
             self.carrito[id] = {
                 "vianda_id" : vianda.id,
                 "descripcion" : vianda.descripcion,
+                "tamaño" : vianda.tamaño,
+                "dia" : vianda.dia,
                 "acumulado" : vianda.precio,
                 "cantidad": 1,
             }

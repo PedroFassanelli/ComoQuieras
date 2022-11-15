@@ -36,7 +36,7 @@ class Vianda(models.Model):
     #precio_entera = models.IntegerField()
 
     def __str__(self):
-        return f'{self.descripcion} {self.precio}'
+        return f'{self.dia} - {self.fecha} - {self.tamaño} - {self.tipo}'
 
 #Vianda y Pedido deberia estar unificado?
 class Pedido(models.Model):
