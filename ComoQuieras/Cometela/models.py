@@ -24,24 +24,24 @@ class Vianda(models.Model):
         ('LIGHT', 'Light')
     )
     tipo = models.CharField(choices= Tipos, max_length=20)
-    
+
+    def __str__(self):
+        return f'{self.dia} - {self.fecha} - {self.tipo}'
+
+class Tamaño(models.Model):
     Tamaños = (
         ('MEDIA', 'Media'),
         ('ENTERA', 'Entera')
     )
     tamaño = models.CharField(choices= Tamaños, max_length=20, null=True)
-
-    precio = models.IntegerField()
-    #precio_media = models.IntegerField()
-    #precio_entera = models.IntegerField()
+    precio = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.dia} - {self.fecha} - {self.tamaño} - {self.tipo}'
+        return f'{self.tamaño} - {self.precio}'
 
-#Vianda y Pedido deberia estar unificado?
-class Pedido(models.Model):
+class ViandaTamaño(models.Model):
     vianda = models.ForeignKey(Vianda, on_delete=models.DO_NOTHING)
-    media = models.IntegerField(default=0)
-    entera = models.IntegerField(default=0)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    tamaño = models.ForeignKey(Tamaño, on_delete=models.DO_NOTHING)
 
+    def __str__(self):
+        return f'{self.vianda} - {self.tamaño}'

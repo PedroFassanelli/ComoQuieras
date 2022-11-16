@@ -21,8 +21,8 @@ from Cometela.views import tienda, agregar_vianda, eliminar_vianda, restar_viand
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', tienda, name = "Tienda"),
-    path('agregar/<int:vianda_id>/', agregar_vianda, name="Add"),
-    path('eliminar/<int:vianda_id>/', eliminar_vianda, name="Del"),
-    path('restar/<int:vianda_id>/', restar_vianda, name="Sub"),
+    path('agregar/<int:vianda_tamaño_id>/', agregar_vianda, name="Add"),
+    path('eliminar/<int:vianda_tamaño_id>/', eliminar_vianda, name="Del"),
+    path('restar/<int:vianda_tamaño_id>/', restar_vianda, name="Sub"),
     path('limpiar/', limpiar_carrito, name="CLS"),
 ]

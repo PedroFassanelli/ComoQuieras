@@ -22,8 +22,8 @@
                 <td>{{value.cantidad}}</td>
                 <td>{{value.acumulado}}
                     <div>
-                        <a href="{% url 'Add' value.vianda_id %}" class="badge btn btn-dark badge-dark">+</a>
-                        <a href="{% url 'Sub' value.vianda_id %}" class="badge btn btn-dark badge-dark">-</a>
+                        <a href="{% url 'Add' value.vianda_tamaño_id %}" class="badge btn btn-dark badge-dark">+</a>
+                        <a href="{% url 'Sub' value.vianda_tamaño_id %}" class="badge btn btn-dark badge-dark">-</a>
                     </div>
                 </td>
             </tr>
@@ -45,5 +45,5 @@
 </div>
 <div class="row text-center">
     <div class="col-6"><a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a></div>
-    <div class="col-6"><a href="#" class="btn btn-success">Guardar</a></div>
+    <div class="col-6"><a href="#" class="btn btn-success">Enviar Pedido</a></div>
 </div>
