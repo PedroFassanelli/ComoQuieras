@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from Cometela.views import tienda, agregar_vianda, eliminar_vianda, restar_vianda, limpiar_carrito
 
@@ -25,4 +25,8 @@ urlpatterns = [
     path('eliminar/<int:vianda_tamaño_id>/', eliminar_vianda, name="Del"),
     path('restar/<int:vianda_tamaño_id>/', restar_vianda, name="Sub"),
     path('limpiar/', limpiar_carrito, name="CLS"),
+
+    path('autenticacion/', include('autenticacion.urls')),
+
+    path('pedidos/', include('pedidos.urls')),
 ]

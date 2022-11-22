@@ -15,7 +15,13 @@
             <div class="col-12 align-self-center"><h1>Viandas Wiltel</h1></div>
         </div>
         <div>
-
+            <!--Si está logueado muestra el nombre y sino aparece el botón de login-->
+            {% if user.is_authenticated %}
+            Usuario: {{user.username}} 
+            <p><a href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a></p>
+            {% else %}
+            <a href="{% url 'iniciar_sesion' %}">Login</a>
+            {% endif %}
         </div>
         <div class="row">
             <div class="col-6">

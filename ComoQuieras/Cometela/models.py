@@ -45,3 +45,10 @@ class ViandaTamaño(models.Model):
 
     def __str__(self):
         return f'{self.vianda} - {self.tamaño}'
+
+"""
+class Pedido(models.Model):
+    user = models.CharField(max_length=50)
+    viandas = models.ManyToManyField(ViandaTamaño) #Dudas
+    fecha = models.DateTimeField()
+"""
