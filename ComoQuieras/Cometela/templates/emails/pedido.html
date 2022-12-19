@@ -8,9 +8,12 @@
 </head>
 <body>
     
-    <p>Hola {{nombre_usuario}}</p>
-    <p>Nº de pedido: {{pedido.id}}</p>
-    <p>Pedido: {{lineas_pedido}}</p>
-
+    <p>Hola {{nombre_usuario}}, tu pedido semanal ha sido confirmado!</p>
+    <p>Pedido:</p>
+    {% for pedido in lineas_pedido %}
+    <ul>
+        <li>{{pedido.cantidad}} unidades de {{pedido.vianda_tamaño.vianda.dia}} - {{pedido.vianda_tamaño.vianda.tipo}} - {{pedido.vianda_tamaño.tamaño.tamaño}}</li>
+    </ul>
+    {% endfor %}
 </body>
 </html>

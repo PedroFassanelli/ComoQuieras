@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from Cometela.views import tienda, agregar_vianda, eliminar_vianda, restar_vianda, limpiar_carrito
+from Cometela.carrito import Carrito
+from Cometela.views import tienda, agregar_vianda, eliminar_vianda, restar_vianda, limpiar_carrito, cargar_vianda, cargar_semana, desactivar_viandas, rrhh, editar_semana
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,8 +26,16 @@ urlpatterns = [
     path('eliminar/<int:vianda_tamaño_id>/', eliminar_vianda, name="Del"),
     path('restar/<int:vianda_tamaño_id>/', restar_vianda, name="Sub"),
     path('limpiar/', limpiar_carrito, name="CLS"),
+    #path('cargar/', cargar_vianda, name="Cargar"),
+    path('cargar_semana/', cargar_semana, name="Cargar Semana"),
+    path('editar_semana/', editar_semana, name="Editar Semana"),
+    path('desactivar_viandas/', desactivar_viandas, name="Desactivar Viandas"),
+    path('rrhh/', rrhh, name="Recursos Humanos"),
 
     path('autenticacion/', include('autenticacion.urls')),
 
     path('pedidos/', include('pedidos.urls')),
+
+    path('reports/', include('reports.urls')),
+
 ]

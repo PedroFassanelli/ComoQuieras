@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<div class="row">
+    <div class="col-5">
+        <div class="mt-4 row">
+            {% if permite_carga == True %}
+            <a href="{% url 'Cargar Semana' %}" class="btn btn-success">Cargar nueva semana</a>
+            {% else %}
+            <a href="" class="btn btn-danger">Cargar nueva semana</a>
+            {% endif %}
+        </div>
+        
+        <div class=" row">
+            <!--TODO Permitir modificar los menus a rrhh-->
+            <!--<a href="{% url 'Editar Semana' %}" class="btn btn-primary">Ver/Modificar semana actual</a>-->
+            <!--<a href="" class="btn btn-primary">Ver/Modificar semana actual</a>-->
+        </div>
+        
+        <div class="mt-4 row">
+            {% if permite_carga == False %}
+            <a href="{% url 'mostrar_pedidos_activos' %}" class="btn btn-primary">Mostrar pedidos de la semana</a>
+            {% else %}
+            <a href=""" class="btn btn-danger">Mostrar pedidos de la semana</a>
+            {% endif %}
+        </div>
+        
+        <div class="mt-4 mb-4 row">
+            <!--Generamos un archivo excel con todos los pedidos de la semana-->
+            {% if permite_carga == False %}
+            <a href="{% url 'reporte' %}" class="btn btn-success">Exportar pedidos semanales</a>
+            {% else %}
+            <a href="" class="btn btn-danger">Exportar pedidos semanales</a>
+            {% endif %}
+        </div>
+
+        
+        <div class="mt-4">
+            <!--Pasamos todas las viandas y tamaños a estado "INACTIVO".-->
+            {% if permite_carga == False %}
+            <div class="row">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#CerrarSemanaModal">
+                    Cerrar semana actual
+                </button>
+            </div>
+            {% else %}
+            <div class="row">
+                <a href="" class="btn btn-danger">Cerrar semana actual</a>
+            </div>
+            {% endif %}
+        </div>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="CerrarSemanaModal" tabindex="-1" role="dialog" aria-labelledby="CerrarSemanaModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="CerrarSemanaModalTitle">Cerrar semana</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Antes de cerrar semana asegurate que hayas exportado los pedidos!!</h6>
+                        <a href="{% url 'reporte' %}" class="btn btn-success">Exportar pedidos semanales</a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
+                        <a href="{% url 'Desactivar Viandas' %}" class="btn btn-warning">Cerrar semana actual</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-7" style="padding-left: 1rem;">
+        {% if permite_carga == False %}
+        <!--En esta parte traer el menú actual-->
+        <h2>Semana Actual</h2>
+        {% for vianda in viandas %}
+        <p>{{vianda.fecha}} - {{vianda.dia}} - {{vianda.tipo}} - {{vianda.descripcion}}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

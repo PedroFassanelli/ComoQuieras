@@ -1,67 +1,62 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viandas Wiltel</title>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 align-self-center"><h1>Viandas Wiltel</h1></div>
-        </div>
-        <div>
-            <!--Si está logueado muestra el nombre y sino aparece el botón de login-->
-            {% if user.is_authenticated %}
-            Usuario: {{user.username}} 
-            <p><a href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a></p>
-            {% else %}
-            <a href="{% url 'iniciar_sesion' %}">Login</a>
-            {% endif %}
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="row" style="padding: 10px 0;">
-                    <div class="col-12">
-                        <div class="row">
-                            {% for vianda in viandas %}
-                            {% if vianda.estado == 'ACTIVA' %}
-                            <div class="col-6">
-                                <div class="card mt-1" >
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{vianda.dia}} - {{vianda.tipo}}</h5>
-                                        <p class="card-text">{{vianda.descripcion}}</p>
-                                        {% for tamaño in tamaños %}
-                                        {% for vianda_tamaño in viandas_tamaños %}
-                                        {% if vianda_tamaño.vianda == vianda and vianda_tamaño.tamaño == tamaño %}
-                                        <div>
-                                            <p>
-                                                {{tamaño.tamaño}}
-                                                <a href="{% url 'Add' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">+</a>
-                                                cantidad
-                                                <a href="{% url 'Sub' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">-</a>
-                                            </p>
-                                        </div>
-                                        {% endif %}
-                                        {% endfor %}
-                                        {% endfor %}
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="row" style="padding: 10px 0;">
+                <div class="col-12">
+                    <div class="row">
+                        {% for vianda in viandas %}
+                        {% if vianda.estado == 'ACTIVA' and vianda.descripcion != '-' %}
+                        <div class="col-6">
+                            <div class="card mt-1" >
+                                <div class="card-body">
+                                    <h5 class="card-title">{{vianda.dia}} - {{vianda.tipo}}</h5>
+                                    <p class="card-text">{{vianda.descripcion}}</p>
+                                    {% for tamaño in tamaños %}
+                                    {% for vianda_tamaño in viandas_tamaños %}
+                                    {% if vianda_tamaño.vianda == vianda and vianda_tamaño.tamaño == tamaño %}
+                                    <div>
+                                        <p>
+                                            {{tamaño.tamaño}}
+                                            <a href="{% url 'Add' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">+</a>
+                                            
+                                            {% if request.session.carrito.items %}
+                                            {% for key, value in request.session.carrito.items %}
+                                                {% if value.vianda_tamaño_id == vianda_tamaño.id %}
+                                                {{value.cantidad}}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <!--TODO VER COMO HACER PARA QUE MUESTRE 0 CUANDO EL PRODUCTO NO ESTÁ EN EL CARRITO-->
+                                            {% else %}
+                                            
+                                            {% endif %}
+                                            
+                                            <a href="{% url 'Sub' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">-</a>
+                                        </p>
                                     </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endfor %}
                                 </div>
                             </div>
-                            {% endif %}
-                            {% endfor %}
                         </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                {% include "carrito.html" %}
-            </div>
+        </div>
+        <div class="col-6">
+            {% include "carrito.html" %}
         </div>
     </div>
-</body>
-</html>
+</div>
+
+
+{% endblock %}
+
+
+

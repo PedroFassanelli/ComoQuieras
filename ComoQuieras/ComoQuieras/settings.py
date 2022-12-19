@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'autenticacion',
     'crispy_forms',
     'pedidos',
+    'reports',
 ]
 
 MIDDLEWARE = [
