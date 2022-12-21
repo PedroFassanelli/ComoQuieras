@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from Cometela.carrito import Carrito
-from Cometela.views import tienda, agregar_vianda, eliminar_vianda, restar_vianda, limpiar_carrito, cargar_vianda, cargar_semana, desactivar_viandas, rrhh, editar_semana
+from Cometela.views import ajax_agregar_vianda, ajax_restar_vianda, tienda, agregar_vianda, eliminar_vianda, restar_vianda, limpiar_carrito, cargar_vianda, cargar_semana, desactivar_viandas, rrhh, editar_semana
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', tienda, name = "Tienda"),
     path('agregar/<int:vianda_tamaño_id>/', agregar_vianda, name="Add"),
+    path('ajax/agregar/', ajax_agregar_vianda, name="Agg"),
+    path('ajax/restar/', ajax_restar_vianda, name="Subb"),
     path('eliminar/<int:vianda_tamaño_id>/', eliminar_vianda, name="Del"),
     path('restar/<int:vianda_tamaño_id>/', restar_vianda, name="Sub"),
     path('limpiar/', limpiar_carrito, name="CLS"),
@@ -37,5 +39,4 @@ urlpatterns = [
     path('pedidos/', include('pedidos.urls')),
 
     path('reports/', include('reports.urls')),
-
 ]

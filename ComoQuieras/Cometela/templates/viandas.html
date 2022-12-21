@@ -2,61 +2,19 @@
 
 {% block contents %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <div class="row" style="padding: 10px 0;">
-                <div class="col-12">
-                    <div class="row">
-                        {% for vianda in viandas %}
-                        {% if vianda.estado == 'ACTIVA' and vianda.descripcion != '-' %}
-                        <div class="col-6">
-                            <div class="card mt-1" >
-                                <div class="card-body">
-                                    <h5 class="card-title">{{vianda.dia}} - {{vianda.tipo}}</h5>
-                                    <p class="card-text">{{vianda.descripcion}}</p>
-                                    {% for tamaño in tamaños %}
-                                    {% for vianda_tamaño in viandas_tamaños %}
-                                    {% if vianda_tamaño.vianda == vianda and vianda_tamaño.tamaño == tamaño %}
-                                    <div>
-                                        <p>
-                                            {{tamaño.tamaño}}
-                                            <a href="{% url 'Add' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">+</a>
-                                            
-                                            {% if request.session.carrito.items %}
-                                            {% for key, value in request.session.carrito.items %}
-                                                {% if value.vianda_tamaño_id == vianda_tamaño.id %}
-                                                {{value.cantidad}}
-                                                {% endif %}
-                                            {% endfor %}
-                                            <!--TODO VER COMO HACER PARA QUE MUESTRE 0 CUANDO EL PRODUCTO NO ESTÁ EN EL CARRITO-->
-                                            {% else %}
-                                            
-                                            {% endif %}
-                                            
-                                            <a href="{% url 'Sub' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">-</a>
-                                        </p>
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            {% include "menus.html" %}
         </div>
-        <div class="col-6">
+        <div class="col-lg-6 mb-5">
             {% include "carrito.html" %}
         </div>
     </div>
 </div>
 
-
 {% endblock %}
+
 
 
 

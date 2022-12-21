@@ -1,0 +1,45 @@
+<div class="row" style="padding: 10px 0;">
+    <div class="col-12">
+        <div class="row">
+            {% for vianda in viandas %}
+            {% if vianda.descripcion != '-' %}
+            <div class="col-lg-4">
+                <div class="card mt-1" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{vianda.dia}} - {{vianda.tipo}}</h5>
+                        <p class="card-text">{{vianda.descripcion}}</p>
+                        {% for tamaño in tamaños %}
+                        {% for vianda_tamaño in viandas_tamaños %}
+                        {% if vianda_tamaño.vianda == vianda and vianda_tamaño.tamaño == tamaño %}
+                        <div>
+                            <p>
+                                {{tamaño.tamaño}}
+                                <!--<a href="{% url 'Add' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">+</a>-->
+                                <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{vianda_tamaño.id}}')" id="btnAgregar">+</button>          
+
+                                {% if request.session.carrito.items %}
+                                {% for key, value in request.session.carrito.items %}
+                                    {% if value.vianda_tamaño_id == vianda_tamaño.id %}
+                                    {{value.cantidad}}
+                                    {% endif %}
+                                {% endfor %}
+                                {% else %}                
+                                {% endif %}
+                                
+                                <!--<a href="{% url 'Sub' vianda_tamaño.id %}" class="badge btn btn-dark badge-dark">-</a>-->
+                                <button class="badge btn btn-dark badge-dark" onclick="Restar('{{vianda_tamaño.id}}')" id="btnRestar">-</button>
+                            </p>
+
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+

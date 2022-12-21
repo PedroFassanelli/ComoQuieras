@@ -23,11 +23,16 @@ def tienda(request):
     if (tiene_pedido_activo(request.user)):
         return render(request, "pedido_realizado.html")
 
-    viandas = Vianda.objects.all()
-    tamaños = Tamaño.objects.all()
+    viandas = Vianda.objects.filter(estado='ACTIVA')
+    tamaños = Tamaño.objects.filter(estado='ACTIVA')
     viandas_tamaños = ViandaTamaño.objects.all()
+    viandas_tamaños_activas = []
+    for x in viandas_tamaños:
+        if x.vianda.estado == 'ACTIVA':
+            viandas_tamaños_activas.append(x)
 
-    return render(request, "viandas.html", {'viandas': viandas, 'tamaños': tamaños, 'viandas_tamaños': viandas_tamaños})
+
+    return render(request, "viandas.html", {'viandas': viandas, 'tamaños': tamaños, 'viandas_tamaños': viandas_tamaños_activas})
 
 #Control de que el usuario ya tenga un pedido activo
 def tiene_pedido_activo(user):
@@ -40,7 +45,29 @@ def agregar_vianda(request, vianda_tamaño_id):
     carrito = Carrito(request)
     vianda_tamaño = ViandaTamaño.objects.get(id=vianda_tamaño_id)
     carrito.agregar(vianda_tamaño)
+    
     return redirect("Tienda")
+
+#Agregar y Restar viandas con Peticiones AJAX
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+def ajax_agregar_vianda(request):
+    if is_ajax(request=request) and request.method =="GET":
+        vianda_tamaño_id = request.GET.get("vianda_tamaño_id")
+        carrito = Carrito(request)
+        vianda_tamaño = ViandaTamaño.objects.get(id=vianda_tamaño_id)
+        carrito.agregar(vianda_tamaño)
+
+    return JsonResponse({'valid': 'True'}, status = 200)
+
+def ajax_restar_vianda(request):
+    if is_ajax(request=request) and request.method =="GET":
+        vianda_tamaño_id = request.GET.get("vianda_tamaño_id")
+        carrito = Carrito(request)
+        vianda_tamaño = ViandaTamaño.objects.get(id=vianda_tamaño_id)
+        carrito.restar(vianda_tamaño)
+
+    return JsonResponse({'valid': 'True'}, status = 200)
 
 def eliminar_vianda(request, vianda_tamaño_id):
     carrito = Carrito(request)

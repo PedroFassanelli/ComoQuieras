@@ -79,7 +79,7 @@
         <!--En esta parte traer el menú actual-->
         <h2>Semana Actual</h2>
         {% for vianda in viandas %}
-        <p>{{vianda.fecha}} - {{vianda.dia}} - {{vianda.tipo}} - {{vianda.descripcion}}</p>
+        <p>{{vianda.fecha}} -<b>{{vianda.dia}} - {{vianda.tipo}}</b> - {{vianda.descripcion}}</p>
         {% endfor %}
         {% endif %}
     </div>
