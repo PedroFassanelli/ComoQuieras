@@ -30,9 +30,10 @@ def tienda(request):
     for x in viandas_tamaños:
         if x.vianda.estado == 'ACTIVA':
             viandas_tamaños_activas.append(x)
+    
+    dias = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES']
 
-
-    return render(request, "viandas.html", {'viandas': viandas, 'tamaños': tamaños, 'viandas_tamaños': viandas_tamaños_activas})
+    return render(request, "viandas.html", {'viandas': viandas, 'tamaños': tamaños, 'viandas_tamaños': viandas_tamaños_activas, 'dias':dias})
 
 #Control de que el usuario ya tenga un pedido activo
 def tiene_pedido_activo(user):
@@ -58,7 +59,7 @@ def ajax_agregar_vianda(request):
         vianda_tamaño = ViandaTamaño.objects.get(id=vianda_tamaño_id)
         carrito.agregar(vianda_tamaño)
 
-    return JsonResponse({'valid': 'True'}, status = 200)
+    return JsonResponse({'context': 'True'}, status = 200)
 
 def ajax_restar_vianda(request):
     if is_ajax(request=request) and request.method =="GET":

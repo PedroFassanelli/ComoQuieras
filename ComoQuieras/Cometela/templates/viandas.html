@@ -15,6 +15,58 @@
 
 {% endblock %}
 
+{% block javascript %}
+<script>
+    //Agregar vianda sin refrescar la página completa
+    function Agregar(p){    
+        $.ajax({
+            type: 'GET',
+            url: '{% url "Add" %}',
+            data: {
+                'vianda_tamaño_id': p,
+            },
+            dataType: 'json'
+        }).done(function(){
+            location.reload();
+        });
+    };
+    //Restar vianda sin refrescar la página completa
+    function Restar(p){    
+        $.ajax({
+            type: 'GET',
+            url: '{% url "Sub" %}',
+            data: {
+                'vianda_tamaño_id': p,
+            },
+            dataType: 'json'
+        }).done(function(){
+            location.reload();
+        });
+    };
+    
+    //Manejo de Cookies para accordion
+    $(document).ready(function() {
+        var last=Cookies.get('activeAccordionGroup');
+        if (last!=null) {
+            //remove default collapse settings
+            $("#accordion .collapse").removeClass('show');
+            //show the last visible group
+            $("#"+last).collapse("show");
+        }
+    });
+
+    $("#accordion").bind('shown.bs.collapse', function() {
+        var active=$("#accordion .show").attr('id');
+        Cookies.set('activeAccordionGroup', active);
+    });
+    $("#accordion").bind('hidden.bs.collapse', function () {
+        Cookies.remove('activeAccordionGroup');
+    });
+    
+</script>
+
+{% endblock %}
+
 
 
 

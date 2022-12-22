@@ -23,9 +23,9 @@
                 <td>{{value.cantidad}}</td>
                 <td>{{value.acumulado}}
                     <div>
-                        <!--<a href="{% url 'Add' value.vianda_tamaño_id %}" class="badge btn btn-dark badge-dark">+</a>-->
+                        <!--<a href="{ url 'Add' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">+</a>-->
                         <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{value.vianda_tamaño_id}}')" id="btnAgregar">+</button>
-                        <!--<a href="{% url 'Sub' value.vianda_tamaño_id %}" class="badge btn btn-dark badge-dark">-</a>-->
+                        <!--<a href="{ url 'Sub' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">-</a>-->
                         <button class="badge btn btn-dark badge-dark" onclick="Restar('{{value.vianda_tamaño_id}}')" id="btnRestar">-</button>
                     </div>
                 </td>
@@ -110,34 +110,4 @@
     </div>
 </div>
 
-{% block javascript %}
-<script>
-    //Agregar vianda sin refrescar la página completa
-    function Agregar(p){    
-        $.ajax({
-            type: 'GET',
-            url: '{% url "Agg" %}',
-            data: {
-                'vianda_tamaño_id': p,
-            },
-            dataType: 'json'
-        }).done(function(){
-            location.reload();
-        });
-    };
-    //Restar vianda sin refrescar la páginca completa
-    function Restar(p){    
-        $.ajax({
-            type: 'GET',
-            url: '{% url "Subb" %}',
-            data: {
-                'vianda_tamaño_id': p,
-            },
-            dataType: 'json'
-        }).done(function(){
-            location.reload();
-        });
-    };
-</script>
 
-{% endblock %}
