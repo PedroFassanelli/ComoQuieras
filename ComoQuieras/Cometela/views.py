@@ -22,6 +22,10 @@ def tienda(request):
     #Si el usuario ya tiene un pedido activo, no puede realizar otro
     if (tiene_pedido_activo(request.user)):
         return render(request, "pedido_realizado.html")
+    
+    #Si no existen viandas activas
+    if (existen_viandas_activas() == False):
+        return render(request, "fuera_de_termino.html")
 
     viandas = Vianda.objects.filter(estado='ACTIVA')
     tamaños = Tamaño.objects.filter(estado='ACTIVA')
@@ -41,6 +45,17 @@ def tiene_pedido_activo(user):
     if len(pedidos) == 1:
         return True
     return False
+
+#Si no existen viandas activas
+def existen_viandas_activas():
+    viandas_activas = Vianda.objects.filter(estado='ACTIVA')
+    if len(viandas_activas) > 0:
+        return True
+    return False
+
+
+
+### MANEJO DE CARRITO ###
 
 def agregar_vianda(request, vianda_tamaño_id):
     carrito = Carrito(request)
@@ -108,6 +123,9 @@ def cargar_vianda(request):
 
     return render(request, 'create.html', {"form": form})
 
+
+### PARTE DE RRHH ###
+
 #Control de que el usuario pertenezca al grupo RRHH
 def es_rrhh(user):
     return user.groups.filter(name__in=['RRHH'])
@@ -122,7 +140,6 @@ def rrhh(request):
 
     return render(request, "rrhh_inicio.html", {'permite_carga': permite_carga, 'viandas':viandas_activas})
 
-##################  VER ESTO  ##################
 #Cargar las viandas de la semana
 @user_passes_test(es_rrhh)
 def cargar_semana(request):
@@ -279,6 +296,7 @@ def cargar_semana(request):
     return render(request, 'cargar_semana.html', {"form": form})
 
 #TODO Ver como editar semana - Mejora a futuro, podemos modificar desde admin.
+#Actualmente no se usa
 def editar_semana(request):
     context = {}
 

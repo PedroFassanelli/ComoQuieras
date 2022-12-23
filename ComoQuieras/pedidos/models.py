@@ -21,13 +21,6 @@ class Pedido(models.Model):
 
     def __str__(self):
         return f'{self.id} - {self.user} - {self.created_at} - {self.estado} - {self.total} '
-
-    #@property
-    #def total(self):
-    #    return self.lineapedido_set.aggregate(
-    #        #TODO Seguir esto [67]      
-    #        total = Sum(F("precio")*F("cantidad"), output_field=FloatField())
-    #    )["total"]
   
     class Meta:
         db_table = 'pedidos'

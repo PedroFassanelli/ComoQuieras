@@ -26,7 +26,6 @@ def procesar_pedido(request):
         if carrito.carrito.items():
             pedido = Pedido.objects.create(user=request.user, estado ='ACTIVO')
             lineas_pedido = list()
-            total = 0
             for key, value in carrito.carrito.items():
                 lineas_pedido.append(LineaPedido(
                     vianda_tamaño_id = key,

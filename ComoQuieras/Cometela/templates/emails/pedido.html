@@ -6,14 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    
+<body> 
     <p>Hola {{nombre_usuario}}, tu pedido semanal ha sido confirmado!</p>
+    <!--
     <p>Pedido:</p>
     {% for pedido in lineas_pedido %}
     <ul>
         <li>{{pedido.cantidad}} unidades de {{pedido.vianda_tamaño.vianda.dia}} - {{pedido.vianda_tamaño.vianda.tipo}} - {{pedido.vianda_tamaño.tamaño.tamaño}}</li>
     </ul>
     {% endfor %}
+    <p>Total: ${{pedido.total}}</p>
+    -->
+    <p>Pedido:</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="row" colspan="7" class="text-center">PEDIDO</th>
+            </tr>
+            <tr>
+                <th scope="col">DIA</th>
+                <th scope="col">TIPO</th>
+                <th scope="col">TAMAÑO</th>
+                <th scope="col" colspan="3">MENÚ</th>
+                <th scope="col">CANTIDAD</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for linea in lineas_pedido %}
+        <div id="">
+            <tr>
+                <td>{{linea.vianda_tamaño.vianda.dia}}</td>
+                <td>{{linea.vianda_tamaño.vianda.tipo}}</td>
+                <td>{{linea.vianda_tamaño.tamaño.tamaño}}</td>
+                <td colspan="3">{{linea.vianda_tamaño.vianda.descripcion}}</td>
+                <td>{{linea.cantidad}}</td>
+            </tr>
+        </div>
+        {% endfor %}
+            <tr>
+                <th scope="row">Total:</th>
+                <td colspan="4">$ {{pedido.total}}</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

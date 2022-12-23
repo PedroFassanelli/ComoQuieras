@@ -23,6 +23,7 @@ class Carrito:
                 "tamaño" : tamaño.tamaño,
                 "acumulado" : tamaño.precio,
                 "cantidad": 1,
+                "menu": vianda.descripcion,
             }
         else:
             self.carrito[id]["cantidad"] += 1

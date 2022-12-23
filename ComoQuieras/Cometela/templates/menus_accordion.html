@@ -9,7 +9,7 @@
                         {{dia}}
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapse{{dia}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{dia}}">
+                    <div id="panelsStayOpen-collapse{{dia}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{dia}}" data-bs-parent="#accordion">
                         <div class="accordion-body row" >
                             {% for vianda in viandas %}
                             {% if vianda.descripcion != '-' and vianda.dia == dia %}

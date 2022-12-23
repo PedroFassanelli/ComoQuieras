@@ -2,12 +2,13 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th scope="row" colspan="5" class="text-center">CARRITO</th>
+                <th scope="row" colspan="8" class="text-center">CARRITO</th>
             </tr>
             <tr>
                 <th scope="col">DIA</th>
                 <th scope="col">TIPO</th>
                 <th scope="col">TAMAÑO</th>
+                <th scope="col" colspan="3">MENÚ</th>
                 <th scope="col">CANTIDAD</th>
                 <th scope="col">PRECIO</th>
             </tr>
@@ -20,6 +21,7 @@
                 <td>{{value.dia}}</td>
                 <td>{{value.tipo}}</td>
                 <td>{{value.tamaño}}</td>
+                <td colspan="3">{{value.menu}}</td>
                 <td>{{value.cantidad}}</td>
                 <td>{{value.acumulado}}
                     <div>
@@ -34,7 +36,7 @@
         {% endfor %}
         {% else %}
             <tr>
-                <td colspan="5">
+                <td colspan="8">
                     <div class="alert alert-danger text-center">Sin Viandas</div>
                 </td>
             </tr>
