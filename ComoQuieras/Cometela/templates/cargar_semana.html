@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<!--
+    Hacer un FORM para cargar las viandas de toda la semana con boton de cargar que habilite a los usuarios a realizar pedidos.
+    Poder CERRAR el pedido semanal inhabilitando a los usuarios a realizar pedidos.
+    Luego de cerrar una semana, poder exportar un archivo con todos los pedidos realizador. Ver en que formato y como mostrar los datos.
+-->
+
+<!--Validar que el usuario sea de RRHH-->
+<form method="POST" action="">
+    {% csrf_token %}
+    <p>En caso de que algún día no haya vianda, rellenar los campos de los menús con un "-" </p>
+    <div class="dia lunes mt-2">
+        <h2>LUNES</h2>
+        <div class="row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="fecha1" class="col-form-label">Fecha:</label>
+            </div>
+            <div class="col-auto ">
+                <input name="fecha1" class="form-control" type="date">
+            </div>
+        </div>
+        <div class="tipo tradicional mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu1" class="col-form-label">Tradicional</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu1" name="menu1" class="form-control">
+            </div>
+        </div>
+        <div class="tipo light mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu2" class="col-form-label">Light</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu2" name="menu2" class="form-control">
+            </div>
+        </div>
+        <div class="tipo veggie mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu3" class="col-form-label">Veggie</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu3" name="menu3" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="dia martes mt-2">
+        <h2>MARTES</h2>
+        <div class="row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="fecha2" class="col-form-label">Fecha:</label>
+            </div>
+            <div class="col-auto">
+                <input name="fecha2" class="form-control" type="date">
+            </div>
+        </div>
+        <div class="tipo tradicional mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu4" class="col-form-label">Tradicional</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu4" name="menu4" class="form-control">
+            </div>
+        </div>
+        <div class="tipo light mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu5" class="col-form-label">Light</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu5" name="menu5" class="form-control">
+            </div>
+        </div>
+        <div class="tipo veggie mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu6" class="col-form-label">Veggie</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu6" name="menu6" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="dia miercoles mt-2">
+        <h2>MIERCOLES</h2>
+        <div class="row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="fecha3" class="col-form-label">Fecha:</label>
+            </div>
+            <div class="col-auto">
+                <input name="fecha3" class="form-control" type="date">
+            </div>
+        </div>
+        <div class="tipo tradicional mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu7" class="col-from-label">Tradicional</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu7" name="menu7" class="form-control">
+            </div>
+        </div>
+        <div class="tipo light mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu8" class="col-from-label">Light</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu8" name="menu8" class="form-control">
+            </div>
+        </div>
+        <div class="tipo veggie mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu9" class="col-from-label">Veggie</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu9" name="menu9" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="dia jueves mt-2">
+        <h2>JUEVES</h2>
+        <div class="row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="fecha4" class="col-form-label">Fecha:</label>
+            </div>
+            <div class="col-auto">
+                <input name="fecha4" class="form-control" type="date">
+            </div>
+        </div>
+        <div class="tipo tradicional mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu10" class="col-from-label">Tradicional</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu10" name="menu10" class="form-control">
+            </div>
+        </div>
+        <div class="tipo light mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu11" class="col-from-label">Light</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu11" name="menu11" class="form-control">
+            </div>
+        </div>
+        <div class="tipo veggie mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu12" class="col-from-label">Veggie</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu12" name="menu12" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="dia viernes mt-2">
+        <h2>VIERNES</h2>
+        <div class="row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="fecha5" class="col-form-label">Fecha:</label>
+            </div>
+            <div class="col-auto">
+                <input name="fecha5" class="form-control" type="date">
+            </div>
+        </div>
+        <div class="tipo tradicional mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu13" class="col-from-label">Tradicional</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu13" name="menu13" class="form-control">
+            </div>
+        </div>
+        <div class="tipo light mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu14" class="col-from-label">Light</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu14" name="menu14" class="form-control">
+            </div>
+        </div>
+        <div class="tipo veggie mt-1 row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_menu15" class="col-from-label">Veggie</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="id_menu15" name="menu15" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="precios mt-2">
+        <h2>PRECIOS</h2>
+        <div class="row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_precio_media" class="col-form-label">Media</label>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="id_precio_media" name="precio_media" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto col-lg-1 col-2">
+                <label for="id_precio_entera" class="col-form-label">Entera</label>
+            </div>
+            <div class="mt-1 col-auto">
+                <input type="text" id="id_precio_entera" name="precio_entera" class="form-control">
+            </div>  
+        </div>
+    </div>
+
+    <a href="{% url 'Tienda' %}" class="btn btn-danger mt-4 mb-4">VOLVER</a>
+    <button type="button" class="btn btn-success mt-4 mb-4" data-toggle="modal" data-target="#CargarSemanaModal">
+        CARGAR SEMANA
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="CargarSemanaModal" tabindex="-1" role="dialog" aria-labelledby="CargarSemanaModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CargarSemanaModalTitle">CONFIRMAR CARGA DE SEMANA</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Revisar que los menús estén correctamente cargados!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
+                    <button class="btn btn-success" type="submit">CARGAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+{% endblock %}

@@ -3,7 +3,11 @@
         <div class="row">
             {% for dia in dias %}
                 <div class="m-2">
-                    <h2>{{dia}}</h2>
+                    {% if dia != 'MIERCOLES' %}
+                        <h2>{{dia}}</h2>
+                    {% else %}
+                        <h2>MIÉRCOLES</h2>
+                    {% endif %}
                 </div>
                 {% for vianda in viandas %}
                     {% if vianda.descripcion != '-' and vianda.dia == dia %}
@@ -19,7 +23,7 @@
                                         <div class="w-50">{{tamaño.tamaño}}</div>
                                         <div class="w-50">
                                             <!--<a href="{ url 'Add' vianda_tamaño.id }" class="badge btn btn-dark badge-dark">+</a>-->
-                                            <button class="badge btn btn-primary badge-dark" onclick="Agregar('{{vianda_tamaño.id}}')" id="btnAgregar">+</button>
+                                            <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{vianda_tamaño.id}}')" id="btnAgregar">+</button>
                                             {% if request.session.carrito.items %}
                                             {% for key, value in request.session.carrito.items %}
                                                 {% if value.vianda_tamaño_id == vianda_tamaño.id %}
@@ -31,7 +35,7 @@
                                             
                                             {% endif %}
                                             <!--<a href="{ url 'Sub' vianda_tamaño.id }" class="badge btn btn-dark badge-dark">-</a>-->
-                                            <button class="badge btn btn-primary badge-dark" onclick="Restar('{{vianda_tamaño.id}}')" id="btnRestar">-</button>
+                                            <button class="badge btn btn-dark badge-dark" onclick="Restar('{{vianda_tamaño.id}}')" id="btnRestar">-</button>
                                         </div>
                                     {% endif %}
                                     {% endfor %}
