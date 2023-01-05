@@ -27,12 +27,9 @@
                                             {% if request.session.carrito.items %}
                                             {% for key, value in request.session.carrito.items %}
                                                 {% if value.vianda_tamaño_id == vianda_tamaño.id %}
-                                                {{value.cantidad}}
+                                                    {{value.cantidad}}
                                                 {% endif %}
-                                            {% endfor %}
-
-                                            {% else %}
-                                            
+                                            {% endfor %}    
                                             {% endif %}
                                             <!--<a href="{ url 'Sub' vianda_tamaño.id }" class="badge btn btn-dark badge-dark">-</a>-->
                                             <button class="badge btn btn-dark badge-dark" onclick="Restar('{{vianda_tamaño.id}}')" id="btnRestar">-</button>
@@ -41,10 +38,14 @@
                                     {% endfor %}
                                     {% endfor %}
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
+                    {% else %}
+                    <!-- Mensaje cuando no hay vianda en la semana -->
+                        {% if vianda.descripcion == '-' and vianda.dia == dia and vianda.tipo == 'TRADICIONAL' %}
+                            <p>No hay viandas disponibles para este día</p>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             {% endfor %}            

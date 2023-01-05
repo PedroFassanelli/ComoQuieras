@@ -2,18 +2,21 @@
 
 {% block contents %}
 
-<div class="row">
-    <div class="col-5">
+<div class="row justify-content-center">
+    <div class="col-lg-5 mb-4">
         <div class="mt-4 row">
             {% if permite_carga == True %}
             <a href="{% url 'Cargar Semana' %}" class="btn btn-success">Cargar nueva semana</a>
             {% else %}
-            <a href="" class="btn btn-danger">Cargar nueva semana</a>
+            <!--<a href="" class="btn btn-danger">Cargar nueva semana</a>-->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#CargarSemanaModal">
+                Cargar nueva semana
+            </button>
             {% endif %}
         </div>
         
         <div class=" row">
-            <!--TODO Permitir modificar los menus a rrhh-->
+            <!-- Permitir modificar los menus a rrhh-->
             <!--<a href="{% url 'Editar Semana' %}" class="btn btn-primary">Ver/Modificar semana actual</a>-->
             <!--<a href="" class="btn btn-primary">Ver/Modificar semana actual</a>-->
         </div>
@@ -35,7 +38,6 @@
             {% endif %}
         </div>
 
-        
         <div class="mt-4">
             <!--Pasamos todas las viandas y tamaños a estado "INACTIVO".-->
             {% if permite_carga == False %}
@@ -51,9 +53,9 @@
             {% endif %}
         </div>
     
-        <!-- Modal -->
+        <!-- Modals -->
         <div class="modal fade" id="CerrarSemanaModal" tabindex="-1" role="dialog" aria-labelledby="CerrarSemanaModalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="CerrarSemanaModalTitle">Cerrar semana</h5>
@@ -62,7 +64,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h6>Antes de cerrar semana asegurate que hayas exportado los pedidos!!</h6>
+                        <h6>Antes de cerrar semana asegurate que hayas exportado los pedidos!</h6>
                         <a href="{% url 'reporte' %}" class="btn btn-success">Exportar pedidos semanales</a>
                     </div>
                     <div class="modal-footer">
@@ -72,18 +74,37 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="CargarSemanaModal" tabindex="-1" role="dialog" aria-labelledby="CargarSemanaModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="CargarSemanaModalTitle">Cargar semana</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Debes cerrar la semana actual antes de cargar una nueva.</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-7" style="padding-left: 1rem;">
-        {% if permite_carga == False %}
-        <!--En esta parte traer el menú actual-->
+    {% if permite_carga == False %}
+    <div class="col-lg-7" style="padding-left: 1rem;">  
+        <!--En esta parte traer los menús actual-->
         <h2>Semana Actual</h2>
         {% for vianda in viandas %}
         <p>{{vianda.fecha}} -<b>{{vianda.dia}} - {{vianda.tipo}}</b> - {{vianda.descripcion}}</p>
         {% endfor %}
-        {% endif %}
     </div>
-
+    {% endif %}
 </div>
 
 {% endblock %}

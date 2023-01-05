@@ -16,15 +16,15 @@
 <body>
     <nav class="container navbar bg-body-tertiary" style="justify-content: end;">
         {% if user.is_authenticated %}
-        <div class="nav-item dropdown" >
-            <a class="navbar-brand dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true" href="#">
-                    <i class="bi bi-person"></i>
-                    {{user.username}}
-            </a>
-            <ul class="dropdown-menu" >
-                <li><a class="dropdown-item" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a></li>
-            </ul>
-        </div>
+            <div class="nav-item dropdown" >
+                <a class="navbar-brand dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true" href="#">
+                        <i class="bi bi-person"></i>
+                        {{user.username}}
+                </a>
+                <ul class="dropdown-menu" >
+                    <li><a class="dropdown-item " href="{% url 'cerrar_sesion' %}" >Cerrar Sesión</a></li>
+                </ul>
+            </div>
         {% endif %}
     </nav>
     <div class="container">

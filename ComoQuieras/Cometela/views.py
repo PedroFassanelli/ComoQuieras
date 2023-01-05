@@ -18,7 +18,6 @@ def tienda(request):
     if (es_rrhh(request.user)):
         return rrhh(request)
     
-    #TODO deberiamos contemplar que el usuario pueda modificar su pedido¿?
     #Si el usuario ya tiene un pedido activo, no puede realizar otro
     if (tiene_pedido_activo(request.user)):
         return render(request, "pedido_realizado.html")
@@ -52,8 +51,6 @@ def existen_viandas_activas():
     if len(viandas_activas) > 0:
         return True
     return False
-
-
 
 ### MANEJO DE CARRITO ###
 
@@ -135,12 +132,13 @@ def es_rrhh(user):
 def rrhh(request):
     viandas_activas = Vianda.objects.filter(estado='ACTIVA')
     permite_carga = True
-    if len(viandas_activas)>0:
+    if len(viandas_activas) > 0:
             permite_carga = False
-
+    
     return render(request, "rrhh_inicio.html", {'permite_carga': permite_carga, 'viandas':viandas_activas})
 
 #Cargar las viandas de la semana
+#TODO Ver esto con el form
 @user_passes_test(es_rrhh)
 def cargar_semana(request):
     
@@ -286,7 +284,6 @@ def cargar_semana(request):
             vianda15.descripcion = request.POST["menu15"]
             vianda15.tipo = 'VEGGIE'
             vianda15.save()
-            
 
             return redirect('Recursos Humanos')
 

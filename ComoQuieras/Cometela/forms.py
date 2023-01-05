@@ -25,6 +25,7 @@ class FormCargaVianda(forms.ModelForm):
             self.fields['tipo'].widget.attrs['class'] = 'form-control'
             self.fields['tipo'].widget.attrs['placeholder'] = "Tipo"
 
+#TODO ver esto
 class FormCargaSemana(forms.Form):
 
     precio_media = forms.IntegerField()
@@ -41,8 +42,7 @@ class FormCargaSemana(forms.Form):
     menu4 = forms.CharField(max_length=250)
     menu5 = forms.CharField(max_length=250)
     menu6 = forms.CharField(max_length=250)
-
-    """
+    
     #MIERCOLES
     fecha3 = forms.DateField()
     menu7 = forms.CharField(max_length=250)
@@ -60,7 +60,7 @@ class FormCargaSemana(forms.Form):
     menu13 = forms.CharField(max_length=250)
     menu14 = forms.CharField(max_length=250)
     menu15 = forms.CharField(max_length=250)
-    """
+    
 
 
 

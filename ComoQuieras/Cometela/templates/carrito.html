@@ -1,5 +1,5 @@
 <div class="alert alert-primary" role="alert" id="cart">
-    <table class="table table-bordered">
+    <table class="table table-bordered ">
         <thead>
             <tr>
                 <th scope="row" colspan="8" class="text-center">CARRITO</th>
@@ -15,25 +15,25 @@
         </thead>
         <tbody>
         {% if request.session.carrito.items %}
-        {% for key, value in request.session.carrito.items %}
-        <div id="">
-            <tr>
-                <td>{{value.dia}}</td>
-                <td>{{value.tipo}}</td>
-                <td>{{value.tamaño}}</td>
-                <td colspan="3">{{value.menu}}</td>
-                <td>{{value.cantidad}}</td>
-                <td>{{value.acumulado}}
-                    <div>
-                        <!--<a href="{ url 'Add' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">+</a>-->
-                        <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{value.vianda_tamaño_id}}')" id="btnAgregar">+</button>
-                        <!--<a href="{ url 'Sub' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">-</a>-->
-                        <button class="badge btn btn-dark badge-dark" onclick="Restar('{{value.vianda_tamaño_id}}')" id="btnRestar">-</button>
-                    </div>
-                </td>
-            </tr>
-        </div>
-        {% endfor %}
+            {% for key, value in request.session.carrito.items %}
+                <div id="">
+                    <tr>
+                        <td>{{value.dia}}</td>
+                        <td>{{value.tipo}}</td>
+                        <td>{{value.tamaño}}</td>
+                        <td colspan="3">{{value.menu}}</td>
+                        <td>{{value.cantidad}}</td>
+                        <td>{{value.acumulado}}
+                            <div>
+                                <!--<a href="{ url 'Add' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">+</a>-->
+                                <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{value.vianda_tamaño_id}}')" id="btnAgregar">+</button>
+                                <!--<a href="{ url 'Sub' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">-</a>-->
+                                <button class="badge btn btn-dark badge-dark" onclick="Restar('{{value.vianda_tamaño_id}}')" id="btnRestar">-</button>
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+            {% endfor %}
         {% else %}
             <tr>
                 <td colspan="8">
@@ -86,15 +86,15 @@
                     </thead>
                     <tbody>
                     {% if request.session.carrito.items %}
-                    {% for key, value in request.session.carrito.items %}
-                        <tr>
-                            <td>{{value.dia}}</td>
-                            <td>{{value.tipo}}</td>
-                            <td>{{value.tamaño}}</td>
-                            <td>{{value.cantidad}}</td>
-                            <td>{{value.acumulado}}</td>
-                        </tr>
-                    {% endfor %}
+                        {% for key, value in request.session.carrito.items %}
+                            <tr>
+                                <td>{{value.dia}}</td>
+                                <td>{{value.tipo}}</td>
+                                <td>{{value.tamaño}}</td>
+                                <td>{{value.cantidad}}</td>
+                                <td>{{value.acumulado}}</td>
+                            </tr>
+                        {% endfor %}
                     {% endif %}
                         <tr>
                             <th scope="row">Total:</th>
