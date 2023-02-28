@@ -1,0 +1,108 @@
+<div class="alert alert-primary" role="alert">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="row" colspan="5" class="text-center">CARRITO</th>
+            </tr>
+            <tr>
+                <th scope="col">DIA</th>
+                <th scope="col">TIPO</th>
+                <th scope="col">TAMAÑO</th>
+                <th scope="col">CANTIDAD</th>
+                <th scope="col">PRECIO</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if request.session.carrito.items %}
+        {% for key, value in request.session.carrito.items %}
+            <tr>
+                <td>{{value.dia}}</td>
+                <td>{{value.tipo}}</td>
+                <td>{{value.tamaño}}</td>
+                <td>{{value.cantidad}}</td>
+                <td>{{value.acumulado}}
+                    <div>
+                        <a href="{% url 'Add' value.vianda_tamaño_id %}" class="badge btn btn-dark badge-dark">+</a>
+                        <a href="{% url 'Sub' value.vianda_tamaño_id %}" class="badge btn btn-dark badge-dark">-</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">
+                    <div class="alert alert-danger text-center">Sin Viandas</div>
+                </td>
+            </tr>
+        {% endif %}
+            <tr>
+                <th scope="row">Total:</th>
+                <td colspan="4">$ {{total_carrito}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+</div>
+<div class="row text-center">
+    <div class="col-6"><a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a></div>  
+    <div class="col-6">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EnviarPedidoModal">
+            Enviar Pedido
+        </button>
+    </div>
+</div>  
+
+<!-- Modal -->
+<div class="modal fade" id="EnviarPedidoModal" tabindex="-1" role="dialog" aria-labelledby="EnviarPedidoModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EnviarPedidoModalTitle">Confirmación del pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tu pedido:</p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="row" colspan="5" class="text-center">CARRITO</th>
+                        </tr>
+                        <tr>
+                            <th scope="col">DIA</th>
+                            <th scope="col">TIPO</th>
+                            <th scope="col">TAMAÑO</th>
+                            <th scope="col">CANTIDAD</th>
+                            <th scope="col">PRECIO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% if request.session.carrito.items %}
+                    {% for key, value in request.session.carrito.items %}
+                        <tr>
+                            <td>{{value.dia}}</td>
+                            <td>{{value.tipo}}</td>
+                            <td>{{value.tamaño}}</td>
+                            <td>{{value.cantidad}}</td>
+                            <td>{{value.acumulado}}</td>
+                        </tr>
+                    {% endfor %}
+                    {% endif %}
+                        <tr>
+                            <th scope="row">Total:</th>
+                            <td colspan="4">$ {{total_carrito}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Recordá que el pedido no puede ser modificado</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a href="../pedidos" class="btn btn-success">Confirmar Pedido</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

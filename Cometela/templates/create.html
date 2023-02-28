@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h2>Cargar nueva vianda</h2>
+
+<form method="POST" action=".">
+    {% csrf_token %}
+    <label for="dia">Día:</label>
+    {{form.dia}}
+    <label for="fecha">Fecha:</label>
+    <input name="fecha" type="date">
+    <label for="descripcion">Descripcion:</label>
+    {{ form.descripcion }}
+    <label for="tipo">Tipo:</label>
+    {{ form.tipo }}
+    
+    <button class="btn btn-primary" type="submit">CARGAR</button>
+</form>
+
+{% endblock %}

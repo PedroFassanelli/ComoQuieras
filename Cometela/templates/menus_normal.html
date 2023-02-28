@@ -1,0 +1,53 @@
+<div class="row" style="padding: 10px 0;">
+    <div class="col-12">
+        <div class="row">
+            {% for dia in dias %}
+                <div class="m-2">
+                    {% if dia != 'MIERCOLES' %}
+                        <h2>{{dia}}</h2>
+                    {% else %}
+                        <h2>MIÉRCOLES</h2>
+                    {% endif %}
+                </div>
+                {% for vianda in viandas %}
+                    {% if vianda.descripcion != '-' and vianda.dia == dia %}
+                    <div class="col-lg-4 mb-4">
+                        <div class="card mt-1  h-100" >
+                            <div class="card-body  d-flex flex-column justify-content-between">
+                                <h5 class="card-title">{{vianda.tipo}}</h5>
+                                <p class="card-text">{{vianda.descripcion}}</p>
+                                <div class="row">
+                                    {% for tamaño in tamaños %}
+                                    {% for vianda_tamaño in viandas_tamaños %}
+                                    {% if vianda_tamaño.vianda == vianda and vianda_tamaño.tamaño == tamaño %}
+                                        <div class="w-50">{{tamaño.tamaño}}</div>
+                                        <div class="w-50">
+                                            <!--<a href="{ url 'Add' vianda_tamaño.id }" class="badge btn btn-dark badge-dark">+</a>-->
+                                            <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{vianda_tamaño.id}}')" id="btnAgregar">+</button>
+                                            {% if request.session.carrito.items %}
+                                            {% for key, value in request.session.carrito.items %}
+                                                {% if value.vianda_tamaño_id == vianda_tamaño.id %}
+                                                {{value.cantidad}}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% else %}
+                                            
+                                            {% endif %}
+                                            <!--<a href="{ url 'Sub' vianda_tamaño.id }" class="badge btn btn-dark badge-dark">-</a>-->
+                                            <button class="badge btn btn-dark badge-dark" onclick="Restar('{{vianda_tamaño.id}}')" id="btnRestar">-</button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}            
+        </div>
+    </div>
+</div>

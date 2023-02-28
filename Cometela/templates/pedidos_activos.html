@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<div>
+    {% for pedido in lista_pedidos %}
+    <div class="card mt-4 mb-4" style="width: 50%;">
+        <div class="card-body">
+            <h5 class="card-title">{{pedido.user.first_name}} {{pedido.user.last_name}} - {{pedido.created_at}}</h5>
+        </div>
+        {% for linea in lista_lineas_pedidos %}
+        {% if linea.pedido == pedido %}
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{linea.vianda_tamaño.vianda.fecha}} - {{linea.vianda_tamaño.vianda.dia}} - {{linea.vianda_tamaño.vianda.tipo}} - {{linea.vianda_tamaño.tamaño.tamaño}} - Cantidad: {{linea.cantidad}} - Menú: {{linea.vianda_tamaño.vianda.descripcion}}</li>
+        </ul>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<a href="{% url 'Tienda' %}" class="btn btn-primary mt-4 mb-4">VOLVER</a>
+
+{% endblock %}

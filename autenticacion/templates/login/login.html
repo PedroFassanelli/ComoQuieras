@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+    <div class="card">
+        <div class="card-body">
+            <div style="width: 50%; margin:auto; margin-top: 3rem;">    
+        <h1>Iniciar Sesión</h1>  
+        <form method="POST" action="" style="color: white;">
+            {% csrf_token %}
+            <div class="mt-1 row labelCenter">
+                <div>
+                    <input type="text" id="id_username" name="username" class="form-control" placeholder="Usuario">
+                </div>
+            </div>
+            <div class="mt-1 row labelCenter">
+                <div>
+                    <input type="password" id="id_password" name="password" class="form-control" placeholder="Contraseña">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="row col-6 ">
+                    <button type="submit" class="btn btn-success mt-4 mb-4">Iniciar Sesión</button>
+                </div>
+            </div>
+        </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
