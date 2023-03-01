@@ -7,9 +7,12 @@ from Cometela.models import Vianda, Tamaño, ViandaTamaño
 from Cometela.carrito import Carrito
 from Cometela.forms import FormCargaVianda, FormCargaSemana
 from pedidos.models import Pedido
-
 from django.http import JsonResponse
 
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 #Necesitas estar logueado para acceder a la tienda
 @login_required(login_url="/autenticacion/iniciar_sesion")
@@ -41,16 +44,12 @@ def tienda(request):
 #Control de que el usuario ya tenga un pedido activo
 def tiene_pedido_activo(user):
     pedidos = Pedido.objects.filter(user=user).filter(estado='ACTIVO')
-    if len(pedidos) == 1:
-        return True
-    return False
+    return (len(pedidos) == 1)
 
 #Si no existen viandas activas
 def existen_viandas_activas():
     viandas_activas = Vianda.objects.filter(estado='ACTIVA')
-    if len(viandas_activas) > 0:
-        return True
-    return False
+    return (len(viandas_activas) > 0)
 
 ### MANEJO DE CARRITO ###
 
@@ -58,7 +57,6 @@ def agregar_vianda(request, vianda_tamaño_id):
     carrito = Carrito(request)
     vianda_tamaño = ViandaTamaño.objects.get(id=vianda_tamaño_id)
     carrito.agregar(vianda_tamaño)
-    
     return redirect("Tienda")
 
 #Agregar y Restar viandas con Peticiones AJAX
@@ -137,160 +135,209 @@ def rrhh(request):
     
     return render(request, "rrhh_inicio.html", {'permite_carga': permite_carga, 'viandas':viandas_activas})
 
+#Funcion para comprobar que no haya viandas activas
+def permite_carga():
+    viandas_activas = Vianda.objects.filter(estado='ACTIVA')
+    permite_carga = True
+    if len(viandas_activas) > 0:
+            permite_carga = False
+    return permite_carga
+
 #Cargar las viandas de la semana
 #TODO Ver esto con el form
 @user_passes_test(es_rrhh)
 def cargar_semana(request):
-    
-    if request.method == "POST":
+    #Si no hay viandas activas, permite acceder. Sino te deja en la pantalla de RRHH.
+    if permite_carga():
+        if request.method == "POST":
 
-        form = FormCargaSemana(request.POST)
+            form = FormCargaSemana(request.POST)
 
-        if form.is_valid():
-            tamaño1 = Tamaño()
-            tamaño2 = Tamaño()
-            vianda1 = Vianda()
-            vianda2 = Vianda()
-            vianda3 = Vianda()
-            vianda4 = Vianda()
-            vianda5 = Vianda()
-            vianda6 = Vianda()
-            vianda7 = Vianda()
-            vianda8 = Vianda()
-            vianda9 = Vianda()
-            vianda10 = Vianda()
-            vianda11 = Vianda()
-            vianda12 = Vianda()
-            vianda13 = Vianda()
-            vianda14 = Vianda()
-            vianda15 = Vianda()
-            
-            #PRECIOS
-            tamaño1.tamaño = 'MEDIA'
-            tamaño1.precio = request.POST["precio_media"]
-            tamaño1.estado = 'ACTIVA'
-            tamaño1.save()
-            tamaño2.tamaño = 'ENTERA'
-            tamaño2.precio = request.POST["precio_entera"]
-            tamaño2.estado = 'ACTIVA'
-            tamaño2.save()
+            if form.is_valid():
+                tamaño1 = Tamaño()
+                tamaño2 = Tamaño()
+                vianda1 = Vianda()
+                vianda2 = Vianda()
+                vianda3 = Vianda()
+                vianda4 = Vianda()
+                vianda5 = Vianda()
+                vianda6 = Vianda()
+                vianda7 = Vianda()
+                vianda8 = Vianda()
+                vianda9 = Vianda()
+                vianda10 = Vianda()
+                vianda11 = Vianda()
+                vianda12 = Vianda()
+                vianda13 = Vianda()
+                vianda14 = Vianda()
+                vianda15 = Vianda()
+                
+                #PRECIOS
+                tamaño1.tamaño = 'MEDIA'
+                tamaño1.precio = request.POST["precio_media"]
+                tamaño1.estado = 'ACTIVA'
+                tamaño1.save()
+                tamaño2.tamaño = 'ENTERA'
+                tamaño2.precio = request.POST["precio_entera"]
+                tamaño2.estado = 'ACTIVA'
+                tamaño2.save()
 
-            #LUNES
-            vianda1.estado='ACTIVA'
-            vianda1.dia = 'LUNES'
-            vianda1.fecha = request.POST["fecha1"]
-            vianda1.descripcion = request.POST["menu1"]
-            vianda1.tipo = 'TRADICIONAL'
-            vianda1.save()
+                #LUNES
+                vianda1.estado='ACTIVA'
+                vianda1.dia = 'LUNES'
+                vianda1.fecha = request.POST["fecha1"]
+                vianda1.descripcion = request.POST["menu1"]
+                vianda1.tipo = 'TRADICIONAL'
+                vianda1.save()
 
-            vianda2.estado='ACTIVA'
-            vianda2.dia = 'LUNES'
-            vianda2.fecha = request.POST["fecha1"]
-            vianda2.descripcion = request.POST["menu2"]
-            vianda2.tipo = 'LIGHT'
-            vianda2.save()
+                vianda2.estado='ACTIVA'
+                vianda2.dia = 'LUNES'
+                vianda2.fecha = request.POST["fecha1"]
+                vianda2.descripcion = request.POST["menu2"]
+                vianda2.tipo = 'LIGHT'
+                vianda2.save()
 
-            vianda3.estado='ACTIVA'
-            vianda3.dia = 'LUNES'
-            vianda3.fecha = request.POST["fecha1"]
-            vianda3.descripcion = request.POST["menu3"]
-            vianda3.tipo = 'VEGGIE'
-            vianda3.save()
+                vianda3.estado='ACTIVA'
+                vianda3.dia = 'LUNES'
+                vianda3.fecha = request.POST["fecha1"]
+                vianda3.descripcion = request.POST["menu3"]
+                vianda3.tipo = 'VEGGIE'
+                vianda3.save()
 
-            #MARTES
-            vianda4.estado='ACTIVA'
-            vianda4.dia = 'MARTES'
-            vianda4.fecha = request.POST["fecha2"]
-            vianda4.descripcion = request.POST["menu4"]
-            vianda4.tipo = 'TRADICIONAL'
-            vianda4.save()
+                #MARTES
+                vianda4.estado='ACTIVA'
+                vianda4.dia = 'MARTES'
+                vianda4.fecha = request.POST["fecha2"]
+                vianda4.descripcion = request.POST["menu4"]
+                vianda4.tipo = 'TRADICIONAL'
+                vianda4.save()
 
-            vianda5.estado='ACTIVA'
-            vianda5.dia = 'MARTES'
-            vianda5.fecha = request.POST["fecha2"]
-            vianda5.descripcion = request.POST["menu5"]
-            vianda5.tipo = 'LIGHT'
-            vianda5.save()
+                vianda5.estado='ACTIVA'
+                vianda5.dia = 'MARTES'
+                vianda5.fecha = request.POST["fecha2"]
+                vianda5.descripcion = request.POST["menu5"]
+                vianda5.tipo = 'LIGHT'
+                vianda5.save()
 
-            vianda6.estado='ACTIVA'
-            vianda6.dia = 'MARTES'
-            vianda6.fecha = request.POST["fecha2"]
-            vianda6.descripcion = request.POST["menu6"]
-            vianda6.tipo = 'VEGGIE'
-            vianda6.save()
+                vianda6.estado='ACTIVA'
+                vianda6.dia = 'MARTES'
+                vianda6.fecha = request.POST["fecha2"]
+                vianda6.descripcion = request.POST["menu6"]
+                vianda6.tipo = 'VEGGIE'
+                vianda6.save()
 
-            #MIERCOLES
-            vianda7.estado='ACTIVA'
-            vianda7.dia = 'MIERCOLES'
-            vianda7.fecha = request.POST["fecha3"]
-            vianda7.descripcion = request.POST["menu7"]
-            vianda7.tipo = 'TRADICIONAL'
-            vianda7.save()
+                #MIERCOLES
+                vianda7.estado='ACTIVA'
+                vianda7.dia = 'MIERCOLES'
+                vianda7.fecha = request.POST["fecha3"]
+                vianda7.descripcion = request.POST["menu7"]
+                vianda7.tipo = 'TRADICIONAL'
+                vianda7.save()
 
-            vianda8.estado='ACTIVA'
-            vianda8.dia = 'MIERCOLES'
-            vianda8.fecha = request.POST["fecha3"]
-            vianda8.descripcion = request.POST["menu8"]
-            vianda8.tipo = 'LIGHT'
-            vianda8.save()
+                vianda8.estado='ACTIVA'
+                vianda8.dia = 'MIERCOLES'
+                vianda8.fecha = request.POST["fecha3"]
+                vianda8.descripcion = request.POST["menu8"]
+                vianda8.tipo = 'LIGHT'
+                vianda8.save()
 
-            vianda9.estado='ACTIVA'
-            vianda9.dia = 'MIERCOLES'
-            vianda9.fecha = request.POST["fecha3"]
-            vianda9.descripcion = request.POST["menu9"]
-            vianda9.tipo = 'VEGGIE'
-            vianda9.save()
+                vianda9.estado='ACTIVA'
+                vianda9.dia = 'MIERCOLES'
+                vianda9.fecha = request.POST["fecha3"]
+                vianda9.descripcion = request.POST["menu9"]
+                vianda9.tipo = 'VEGGIE'
+                vianda9.save()
 
-            #JUEVES
-            vianda10.estado='ACTIVA'
-            vianda10.dia = 'JUEVES'
-            vianda10.fecha = request.POST["fecha4"]
-            vianda10.descripcion = request.POST["menu10"]
-            vianda10.tipo = 'TRADICIONAL'
-            vianda10.save()
+                #JUEVES
+                vianda10.estado='ACTIVA'
+                vianda10.dia = 'JUEVES'
+                vianda10.fecha = request.POST["fecha4"]
+                vianda10.descripcion = request.POST["menu10"]
+                vianda10.tipo = 'TRADICIONAL'
+                vianda10.save()
 
-            vianda11.estado='ACTIVA'
-            vianda11.dia = 'JUEVES'
-            vianda11.fecha = request.POST["fecha4"]
-            vianda11.descripcion = request.POST["menu11"]
-            vianda11.tipo = 'LIGHT'
-            vianda11.save()
+                vianda11.estado='ACTIVA'
+                vianda11.dia = 'JUEVES'
+                vianda11.fecha = request.POST["fecha4"]
+                vianda11.descripcion = request.POST["menu11"]
+                vianda11.tipo = 'LIGHT'
+                vianda11.save()
 
-            vianda12.estado='ACTIVA'
-            vianda12.dia = 'JUEVES'
-            vianda12.fecha = request.POST["fecha4"]
-            vianda12.descripcion = request.POST["menu12"]
-            vianda12.tipo = 'VEGGIE'
-            vianda12.save()
+                vianda12.estado='ACTIVA'
+                vianda12.dia = 'JUEVES'
+                vianda12.fecha = request.POST["fecha4"]
+                vianda12.descripcion = request.POST["menu12"]
+                vianda12.tipo = 'VEGGIE'
+                vianda12.save()
 
-            #VIERNES
-            vianda13.estado='ACTIVA'
-            vianda13.dia = 'VIERNES'
-            vianda13.fecha = request.POST["fecha5"]
-            vianda13.descripcion = request.POST["menu13"]
-            vianda13.tipo = 'TRADICIONAL'
-            vianda13.save()
+                #VIERNES
+                vianda13.estado='ACTIVA'
+                vianda13.dia = 'VIERNES'
+                vianda13.fecha = request.POST["fecha5"]
+                vianda13.descripcion = request.POST["menu13"]
+                vianda13.tipo = 'TRADICIONAL'
+                vianda13.save()
 
-            vianda14.estado='ACTIVA'
-            vianda14.dia = 'VIERNES'
-            vianda14.fecha = request.POST["fecha5"]
-            vianda14.descripcion = request.POST["menu14"]
-            vianda14.tipo = 'LIGHT'
-            vianda14.save()
+                vianda14.estado='ACTIVA'
+                vianda14.dia = 'VIERNES'
+                vianda14.fecha = request.POST["fecha5"]
+                vianda14.descripcion = request.POST["menu14"]
+                vianda14.tipo = 'LIGHT'
+                vianda14.save()
 
-            vianda15.estado='ACTIVA'
-            vianda15.dia = 'VIERNES'
-            vianda15.fecha = request.POST["fecha5"]
-            vianda15.descripcion = request.POST["menu15"]
-            vianda15.tipo = 'VEGGIE'
-            vianda15.save()
+                vianda15.estado='ACTIVA'
+                vianda15.dia = 'VIERNES'
+                vianda15.fecha = request.POST["fecha5"]
+                vianda15.descripcion = request.POST["menu15"]
+                vianda15.tipo = 'VEGGIE'
+                vianda15.save()
 
-            return redirect('Recursos Humanos')
+                #Invocar enviar mail masivo
+                usuarios = User.objects.all()
+                usuarios_con_mails = []
+                for usuario in usuarios:
+                    if usuario.email != '':
+                        usuarios_con_mails.append(usuario)
 
+                m = slice(5, 7)
+                d = slice(8, 10)
+                for usuario in usuarios_con_mails:
+                    enviar_mail_recordatorio(
+                        nombre_usuario=usuario.first_name,
+                        email_usuario=usuario.email,
+                        dia_desde=vianda1.fecha[d],
+                        mes_desde=vianda1.fecha[m],
+                        dia_hasta=vianda15.fecha[d],
+                        mes_hasta=vianda15.fecha[m]
+                    )
+
+                return redirect('Recursos Humanos')
+
+        else:
+            form = FormCargaSemana()
     else:
-        form = FormCargaSemana()
+        return redirect('Recursos Humanos')
     
     return render(request, 'cargar_semana.html', {"form": form})
+
+#Enviar mail masivo a los usuarios avisando que ya se pueden realizar los pedidos semanales
+def enviar_mail_recordatorio(**kwargs):
+
+    asunto="Vianda desde el " + kwargs.get("dia_desde") + "/" + kwargs.get("mes_desde") + " al " + kwargs.get("dia_hasta") + "/" + kwargs.get("mes_hasta")
+    mensaje=render_to_string("emails/recordatorio.html",{
+        "nombre_usuario": kwargs.get("nombre_usuario"),
+        "dia_desde": kwargs.get("dia_desde"),
+        "mes_desde": kwargs.get("mes_desde"),
+        "dia_hasta": kwargs.get("dia_hasta"),
+        "mes_hasta": kwargs.get("mes_hasta")
+    })
+
+    mensaje_texto = strip_tags(mensaje)
+    #Ver de cambiar este email
+    from_email="viandaswiltel@gmail.com"
+    to=kwargs.get("email_usuario")
+
+    send_mail(asunto, mensaje_texto, from_email, [to], html_message=mensaje)
 
 #TODO Ver como editar semana - Mejora a futuro, podemos modificar desde admin.
 #Actualmente no se usa

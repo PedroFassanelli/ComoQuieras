@@ -9,5 +9,11 @@ h1{
     color: orange;
 }
 
-
+a{
+    color: orange;
+    text-decoration: none;
+}
+a:hover{
+    color: orangered;
+}
 

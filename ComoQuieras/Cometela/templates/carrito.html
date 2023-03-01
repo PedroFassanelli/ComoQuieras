@@ -1,5 +1,5 @@
-<div class="alert alert-primary" role="alert" id="cart">
-    <table class="table table-bordered ">
+<div class="alert alert-primary" role="alert" >
+    <table class="table table-bordered m-0" id="cart">
         <thead>
             <tr>
                 <th scope="row" colspan="8" class="text-center">CARRITO</th>
@@ -26,9 +26,9 @@
                         <td>{{value.acumulado}}
                             <div>
                                 <!--<a href="{ url 'Add' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">+</a>-->
-                                <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{value.vianda_tamaño_id}}')" id="btnAgregar">+</button>
+                                <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{value.vianda_tamaño_id}}', '{{value.dia}}')" id="btnAgregar">+</button>
                                 <!--<a href="{ url 'Sub' value.vianda_tamaño_id }" class="badge btn btn-dark badge-dark">-</a>-->
-                                <button class="badge btn btn-dark badge-dark" onclick="Restar('{{value.vianda_tamaño_id}}')" id="btnRestar">-</button>
+                                <button class="badge btn btn-dark badge-dark" onclick="Restar('{{value.vianda_tamaño_id}}', '{{value.dia}}')" id="btnRestar">-</button>
                             </div>
                         </td>
                     </tr>
@@ -51,9 +51,11 @@
     
 </div>
 <div class="row text-center">
-    <div class="col-6"><a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a></div>  
     <div class="col-6">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EnviarPedidoModal">
+        <a href="{% url 'CLS' %}" class="btn btn-danger" onclick="Limpiar()">Vaciar Carrito</a>
+    </div>  
+    <div class="col-6">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EnviarPedidoModal" onclick="CarritoModal()">
             Enviar Pedido
         </button>
     </div>
@@ -61,7 +63,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="EnviarPedidoModal" tabindex="-1" role="dialog" aria-labelledby="EnviarPedidoModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="EnviarPedidoModalTitle">Confirmación del pedido</h5>
@@ -69,7 +71,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="CarritoModal">
                 <p>Tu pedido:</p>
                 <table class="table table-bordered">
                     <thead>
@@ -106,7 +108,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <a href="../pedidos" class="btn btn-success">Confirmar Pedido</a>
+                <a href="../pedidos" class="btn btn-success" onclick="Limpiar()">Confirmar Pedido</a>
             </div>
         </div>
     </div>

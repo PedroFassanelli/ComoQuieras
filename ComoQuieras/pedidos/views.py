@@ -42,11 +42,11 @@ def procesar_pedido(request):
             enviar_mail(
                 pedido=pedido,
                 lineas_pedido=lineas_pedido,
-                nombre_usuario=request.user.username,
+                nombre_usuario=request.user.first_name,
                 email_usuario=request.user.email
             )
 
-            messages.success(request, "El pedido se ha realizado correctamente!")
+            #messages.success(request, "El pedido se ha realizado correctamente!")
 
     return redirect('CLS')
 

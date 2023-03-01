@@ -24,7 +24,7 @@ def iniciar_sesion(request):
             else:
                 messages.error(request, "usuario no válido")
         else:
-            messages.error(request, "información incorrecta")
+            messages.error(request, "Usuario o contraseña incorrectos")
 
 
     form = AuthenticationForm()

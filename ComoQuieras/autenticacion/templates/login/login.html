@@ -16,11 +16,22 @@
                     <input type="password" id="id_password" name="password" class="form-control" placeholder="Contraseña">
                 </div>
             </div>
+            <div class="mt-1 row">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="color: red">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="mt-1 row">
+                <a href="{% url 'password_reset' %}">Recuperar contraseña</a>
+            </div>
             <div class="row justify-content-center">
                 <div class="row col-6 ">
                     <button type="submit" class="btn btn-success mt-4 mb-4">Iniciar Sesión</button>
                 </div>
             </div>
+
         </form>
     </div>
 

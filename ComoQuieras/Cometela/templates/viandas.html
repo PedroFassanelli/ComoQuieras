@@ -5,7 +5,7 @@
 <div class="container ">
     <div class="row justify-content-center">
         <div class="col-lg-12">
-            {% include "menus_normal.html" %}
+            {% include "menus_accordion.html" %}
         </div>
         <div class="col-lg-8 mb-5">
             {% include "carrito.html" %}
@@ -20,37 +20,51 @@
 
 {% block javascript %}
 <script>
+    
     //Agregar vianda sin refrescar la página completa
-    function Agregar(p){    
+    function Agregar(vianda_tamaño_id, dia){    
         $.ajax({
             type: 'GET',
             url: '{% url "Add" %}',
             data: {
-                'vianda_tamaño_id': p,
+                'vianda_tamaño_id': vianda_tamaño_id,
             },
             dataType: 'json'
         }).done(function(){
-            location.reload();
+            //location.reload();
+            Refresh(dia)
         });
     };
+
     //Restar vianda sin refrescar la página completa
-    function Restar(p){    
+    function Restar(vianda_tamaño_id, dia){    
         $.ajax({
             type: 'GET',
             url: '{% url "Sub" %}',
             data: {
-                'vianda_tamaño_id': p,
+                'vianda_tamaño_id': vianda_tamaño_id,
             },
             dataType: 'json'
         }).done(function(){
-            location.reload();
+            //location.reload();
+            Refresh(dia)
         });
     };
+
+    //Load solo del div del dia, no de la pág entera
+    function Refresh(dia){
+        $("#menu" + dia).load(" #menu" + dia + " > *");
+        $("#cart").load(" #cart  > *");
+    }
     
-    /*
+    //Actualizar el modal del carrito 
+    function CarritoModal(){
+        $("#CarritoModal").load(" #CarritoModal");
+    }
+
     //Manejo de Cookies para accordion
     $(document).ready(function() {
-        var last=Cookies.get('activeAccordionGroup');
+        let last=Cookies.get('activeAccordionGroup');
         if (last!=null) {
             //remove default collapse settings
             $("#accordion .collapse").removeClass('show');
@@ -60,13 +74,18 @@
     });
 
     $("#accordion").bind('shown.bs.collapse', function() {
-        var active=$("#accordion .show").attr('id');
+        let active=$("#accordion .show").attr('id');
         Cookies.set('activeAccordionGroup', active);
     });
     $("#accordion").bind('hidden.bs.collapse', function() {
         Cookies.remove('activeAccordionGroup');
     });
-    */
+    
+    //Funcion para cerrar el accordion cuando limpiamos el carrito o realizamos el pedido
+    function Limpiar(){
+        Cookies.remove('activeAccordionGroup');
+    }
+    
 </script>
 
 {% endblock %}

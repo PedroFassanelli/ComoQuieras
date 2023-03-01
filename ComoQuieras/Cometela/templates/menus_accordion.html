@@ -9,8 +9,8 @@
                         {{dia}}
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapse{{dia}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{dia}}" data-bs-parent="#accordion">
-                        <div class="accordion-body row" >
+                    <div id="panelsStayOpen-collapse{{dia}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{dia}}" data-bs-parent="#accordion" >
+                        <div class="accordion-body row" id="menu{{dia}}">
                             {% for vianda in viandas %}
                             {% if vianda.descripcion != '-' and vianda.dia == dia %}
                             <div class="col-lg-4" >
@@ -22,10 +22,11 @@
                                             {% for tamaño in tamaños %}
                                             {% for vianda_tamaño in viandas_tamaños %}
                                             {% if vianda_tamaño.vianda == vianda and vianda_tamaño.tamaño == tamaño %}
-                                                <div class="w-50">{{tamaño.tamaño}}</div>
-                                                <div class="w-50">
+                                            <div class="row mb-2">
+                                                <div class="col-6">{{tamaño.tamaño}}</div>
+                                                <div class="col-6 d-flex justify-content-between" style="width: 90px;">
                                                     <!--<a href="{ url 'Add' vianda_tamaño.id }" class="badge btn btn-dark badge-dark">+</a>-->
-                                                    <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{vianda_tamaño.id}}')" id="btnAgregar">+</button>          
+                                                    <button class="badge btn btn-dark badge-dark" onclick="Agregar('{{vianda_tamaño.id}}','{{dia}}')" id="btnAgregar">+</button>          
                                                     {% if request.session.carrito.items %}
                                                     {% for key, value in request.session.carrito.items %}
                                                         {% if value.vianda_tamaño_id == vianda_tamaño.id %}
@@ -35,8 +36,9 @@
                                                     {% else %}                
                                                     {% endif %}                                    
                                                     <!--<a href="{ url 'Sub' vianda_tamaño.id }" class="badge btn btn-dark badge-dark">-</a>-->
-                                                    <button class="badge btn btn-dark badge-dark" onclick="Restar('{{vianda_tamaño.id}}')" id="btnRestar">-</button>
+                                                    <button class="badge btn btn-dark badge-dark" onclick="Restar('{{vianda_tamaño.id}}','{{dia}}')" id="btnRestar">-</button>
                                                 </div>
+                                            </div>
                                             {% endif %}
                                             {% endfor %}
                                             {% endfor %}
@@ -44,6 +46,11 @@
                                     </div>
                                 </div>
                             </div>
+                            {% else %}
+                                <!-- Mensaje cuando no hay vianda en la semana -->
+                                {% if vianda.descripcion == '-' and vianda.dia == dia and vianda.tipo == 'TRADICIONAL' %}
+                                    <p>No hay viandas disponibles para este día</p>
+                                {% endif %}
                             {% endif %}
                             {% endfor %}
                         </div>
